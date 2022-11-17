@@ -1,3 +1,3 @@
-module go-data-structures
+module datastructures
 
 go 1.19
