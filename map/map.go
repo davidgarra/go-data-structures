@@ -1,4 +1,4 @@
-package main
+package _map
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ type Map[K string, V any] struct {
 	Data [][]Bucket[K, V]
 }
 
-func NewMap[K string, V any](size int) Map[K, V] {
+func New[K string, V any](size int) Map[K, V] {
 	return Map[K, V]{Data: make([][]Bucket[K, V], size)}
 }
 

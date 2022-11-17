@@ -1,4 +1,4 @@
-package main
+package _map
 
 import (
 	"log"
@@ -8,7 +8,7 @@ import (
 
 func TestMapSet(t *testing.T) {
 	quiet()
-	myMap := NewMap[string, string](2)
+	myMap := New[string, string](2)
 
 	trySet := func(key string, value string, expected bool) {
 		inserted := myMap.Set(key, value)
@@ -24,7 +24,7 @@ func TestMapSet(t *testing.T) {
 
 func TestMapGet(t *testing.T) {
 	quiet()
-	myMap := NewMap[string, string](2)
+	myMap := New[string, string](2)
 
 	tryGet := func(key string, value string, expected bool) {
 		if got, found := myMap.Get(key); found != expected || got != value {
@@ -45,7 +45,7 @@ func TestMapGet(t *testing.T) {
 
 func TestMapKeys(t *testing.T) {
 	quiet()
-	myMap := NewMap[string, string](2)
+	myMap := New[string, string](2)
 
 	checkKey := func(key string, keys []string, expected bool) {
 		for _, a := range keys {
