@@ -54,3 +54,13 @@ func (m *Map[K, V]) Get(key K) (V, bool) {
 	bucket, found := findBucket(m.Data[hk], key)
 	return bucket.value, found
 }
+
+func (m *Map[K, V]) Keys() []K {
+	var keys []K
+	for _, bucketlist := range m.Data {
+		for _, bucket := range bucketlist {
+			keys = append(keys, bucket.key)
+		}
+	}
+	return keys
+}
