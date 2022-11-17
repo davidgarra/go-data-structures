@@ -38,15 +38,16 @@ func findBucket[K string, V any](bl []Bucket[K, V], key K) (Bucket[K, V], bool) 
 	return Bucket[K, V]{}, false
 }
 
-func (m *Map[K, V]) Set(key K, value V) {
+func (m *Map[K, V]) Set(key K, value V) bool {
 	hk := m.hash(key)
 	bucketList := m.Data[hk]
 	if _, found := findBucket(bucketList, key); found {
 		fmt.Printf("Key %v already exists\n", key)
-		return
+		return false
 	}
 	bucketList = append(bucketList, Bucket[K, V]{key, value})
 	m.Data[hk] = bucketList
+	return true
 }
 
 func (m *Map[K, V]) Get(key K) (V, bool) {
