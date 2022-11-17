@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// TODO: find a way to use a key different from string
 type Bucket[K string, V any] struct {
 	key   K
 	value V
