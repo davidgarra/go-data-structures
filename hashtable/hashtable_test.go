@@ -8,7 +8,7 @@ import (
 
 func TestHashTableSet(t *testing.T) {
 	quiet()
-	myHashTable := New[string, string](2)
+	myHashTable := New[string](2)
 
 	trySet := func(key string, value string, expected bool) {
 		inserted := myHashTable.Set(key, value)
@@ -24,7 +24,7 @@ func TestHashTableSet(t *testing.T) {
 
 func TestHashTableGet(t *testing.T) {
 	quiet()
-	myHashTable := New[string, string](2)
+	myHashTable := New[string](2)
 
 	tryGet := func(key string, value string, expected bool) {
 		if got, found := myHashTable.Get(key); found != expected || got != value {
@@ -45,7 +45,7 @@ func TestHashTableGet(t *testing.T) {
 
 func TestHashTableKeys(t *testing.T) {
 	quiet()
-	myHashTable := New[string, string](2)
+	myHashTable := New[string](2)
 
 	checkKey := func(key string, keys []string, expected bool) {
 		for _, a := range keys {
