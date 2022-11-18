@@ -1,4 +1,4 @@
-package _map
+package hashtable
 
 import (
 	"log"
@@ -6,14 +6,14 @@ import (
 	"testing"
 )
 
-func TestMapSet(t *testing.T) {
+func TestHashTableSet(t *testing.T) {
 	quiet()
-	myMap := New[string, string](2)
+	myHashTable := New[string, string](2)
 
 	trySet := func(key string, value string, expected bool) {
-		inserted := myMap.Set(key, value)
+		inserted := myHashTable.Set(key, value)
 		if inserted != expected {
-			t.Fatalf("Insert '%v:%v' in map = %v, want %v", key, value, inserted, expected)
+			t.Fatalf("Insert '%v:%v' in hashtable = %v, want %v", key, value, inserted, expected)
 		}
 	}
 	trySet("k1", "v1", true)  // test first insert
@@ -22,19 +22,19 @@ func TestMapSet(t *testing.T) {
 	trySet("k3", "v3", true)  // test collision
 }
 
-func TestMapGet(t *testing.T) {
+func TestHashTableGet(t *testing.T) {
 	quiet()
-	myMap := New[string, string](2)
+	myHashTable := New[string, string](2)
 
 	tryGet := func(key string, value string, expected bool) {
-		if got, found := myMap.Get(key); found != expected || got != value {
-			t.Fatalf("myMap.Get(%v)=(%v:%v), want (%v, %v)", key, got, found, value, expected)
+		if got, found := myHashTable.Get(key); found != expected || got != value {
+			t.Fatalf("myHashTable.Get(%v)=(%v:%v), want (%v, %v)", key, got, found, value, expected)
 		}
 	}
-	myMap.Set("k1", "v1")
-	myMap.Set("k2", "v2")
-	myMap.Set("k2", "v2")
-	myMap.Set("k3", "v3")
+	myHashTable.Set("k1", "v1")
+	myHashTable.Set("k2", "v2")
+	myHashTable.Set("k2", "v2")
+	myHashTable.Set("k3", "v3")
 
 	tryGet("k1", "v1", true) // test first get
 	tryGet("k1", "v1", true) // test second get on the same element
@@ -43,31 +43,31 @@ func TestMapGet(t *testing.T) {
 	tryGet("k4", "", false)  // test get on non existing element
 }
 
-func TestMapKeys(t *testing.T) {
+func TestHashTableKeys(t *testing.T) {
 	quiet()
-	myMap := New[string, string](2)
+	myHashTable := New[string, string](2)
 
 	checkKey := func(key string, keys []string, expected bool) {
 		for _, a := range keys {
 			if a == key {
 				if expected == false {
-					t.Fatalf("False positive in myMap.Keys(), keys: %v, false positive: %v", keys, key)
+					t.Fatalf("False positive in myHashTable.Keys(), keys: %v, false positive: %v", keys, key)
 				}
 				return
 			}
 		}
 
 		if expected == true {
-			t.Fatalf("Key missing in myMap.Keys(), keys: %v, want: %v", keys, key)
+			t.Fatalf("Key missing in myHashTable.Keys(), keys: %v, want: %v", keys, key)
 		}
 	}
 
-	myMap.Set("k1", "v1")
-	myMap.Set("k2", "v2")
-	myMap.Set("k2", "v2")
-	myMap.Set("k3", "v3")
+	myHashTable.Set("k1", "v1")
+	myHashTable.Set("k2", "v2")
+	myHashTable.Set("k2", "v2")
+	myHashTable.Set("k3", "v3")
 
-	keys := myMap.Keys()
+	keys := myHashTable.Keys()
 	if len := len(keys); len != 3 {
 		t.Fatalf("Keys lenght=%v, want %v", len, 3)
 	}
