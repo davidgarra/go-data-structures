@@ -1,8 +1,7 @@
 package linkedlist
 
 import (
-	"log"
-	"os"
+	"datastructures/utils"
 	"testing"
 )
 
@@ -25,7 +24,8 @@ func checkRemove(t *testing.T, l *LinkedList[string], index int, expected bool) 
 }
 
 func TestLinkedListAppend(t *testing.T) {
-	quiet()
+
+	utils.Quiet()
 	l := New[string]()
 
 	checkLength(t, &l, 0)
@@ -41,7 +41,8 @@ func TestLinkedListAppend(t *testing.T) {
 }
 
 func TestLinkedListPrepend(t *testing.T) {
-	quiet()
+
+	utils.Quiet()
 	l := New[string]()
 
 	checkLength(t, &l, 0)
@@ -57,7 +58,8 @@ func TestLinkedListPrepend(t *testing.T) {
 }
 
 func TestLinkedListInsert(t *testing.T) {
-	quiet()
+
+	utils.Quiet()
 	l := New[string]()
 
 	checkLength(t, &l, 0)
@@ -82,7 +84,8 @@ func TestLinkedListInsert(t *testing.T) {
 }
 
 func TestLinkedListGet(t *testing.T) {
-	quiet()
+
+	utils.Quiet()
 	l := New[string]()
 
 	l.Append("A")
@@ -97,7 +100,7 @@ func TestLinkedListGet(t *testing.T) {
 }
 
 func TestLinkedListRemove(t *testing.T) {
-	quiet()
+	utils.Quiet()
 	l := New[string]()
 
 	checkRemove(t, &l, 0, false) // test empy list
@@ -118,19 +121,4 @@ func TestLinkedListRemove(t *testing.T) {
 	checkLength(t, &l, 1)
 	checkRemove(t, &l, 0, true) // test single node
 	checkLength(t, &l, 0)
-}
-
-func quiet() func() {
-	null, _ := os.Open(os.DevNull)
-	sout := os.Stdout
-	serr := os.Stderr
-	os.Stdout = null
-	os.Stderr = null
-	log.SetOutput(null)
-	return func() {
-		defer null.Close()
-		os.Stdout = sout
-		os.Stderr = serr
-		log.SetOutput(os.Stderr)
-	}
 }
