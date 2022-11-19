@@ -1,13 +1,12 @@
 package hashtable
 
 import (
-	"log"
-	"os"
+	"datastructures/utils"
 	"testing"
 )
 
 func TestHashTableSet(t *testing.T) {
-	quiet()
+	utils.Quiet()
 	myHashTable := New[string](2)
 
 	trySet := func(key string, value string, expected bool) {
@@ -23,7 +22,7 @@ func TestHashTableSet(t *testing.T) {
 }
 
 func TestHashTableGet(t *testing.T) {
-	quiet()
+	utils.Quiet()
 	myHashTable := New[string](2)
 
 	tryGet := func(key string, value string, expected bool) {
@@ -44,7 +43,7 @@ func TestHashTableGet(t *testing.T) {
 }
 
 func TestHashTableKeys(t *testing.T) {
-	quiet()
+	utils.Quiet()
 	myHashTable := New[string](2)
 
 	checkKey := func(key string, keys []string, expected bool) {
@@ -76,19 +75,4 @@ func TestHashTableKeys(t *testing.T) {
 	checkKey("k2", keys, true)  // test second inserted key
 	checkKey("k3", keys, true)  // test collided key
 	checkKey("k4", keys, false) // test missing key
-}
-
-func quiet() func() {
-	null, _ := os.Open(os.DevNull)
-	sout := os.Stdout
-	serr := os.Stderr
-	os.Stdout = null
-	os.Stderr = null
-	log.SetOutput(null)
-	return func() {
-		defer null.Close()
-		os.Stdout = sout
-		os.Stderr = serr
-		log.SetOutput(os.Stderr)
-	}
 }
