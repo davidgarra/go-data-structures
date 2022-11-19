@@ -10,18 +10,18 @@ type Bucket[V any] struct {
 }
 
 type HashTable[V any] struct {
-	Data [][]Bucket[V]
+	data [][]Bucket[V]
 }
 
 func New[V any](size int) HashTable[V] {
-	return HashTable[V]{Data: make([][]Bucket[V], size)}
+	return HashTable[V]{data: make([][]Bucket[V], size)}
 }
 
 func (m *HashTable[V]) hash(key string) uint {
 	var hash uint
 	for _, b := range key {
 		hash += uint(b)
-		hash %= uint(len(m.Data))
+		hash %= uint(len(m.data))
 	}
 
 	return hash
@@ -39,25 +39,25 @@ func findBucket[V any](bl []Bucket[V], key string) (Bucket[V], bool) {
 
 func (m *HashTable[V]) Set(key string, value V) bool {
 	hk := m.hash(key)
-	bucketList := m.Data[hk]
+	bucketList := m.data[hk]
 	if _, found := findBucket(bucketList, key); found {
 		fmt.Printf("Key %v already exists\n", key)
 		return false
 	}
 	bucketList = append(bucketList, Bucket[V]{key, value})
-	m.Data[hk] = bucketList
+	m.data[hk] = bucketList
 	return true
 }
 
 func (m *HashTable[V]) Get(key string) (V, bool) {
 	hk := m.hash(key)
-	bucket, found := findBucket(m.Data[hk], key)
+	bucket, found := findBucket(m.data[hk], key)
 	return bucket.value, found
 }
 
 func (m *HashTable[V]) Keys() []string {
 	var keys []string
-	for _, bucketlist := range m.Data {
+	for _, bucketlist := range m.data {
 		for _, bucket := range bucketlist {
 			keys = append(keys, bucket.key)
 		}
