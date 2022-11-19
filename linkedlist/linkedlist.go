@@ -14,7 +14,7 @@ type Node[T any] struct {
 type LinkedList[T any] struct {
 	head   *Node[T]
 	tail   *Node[T]
-	length int
+	Length int
 }
 
 func New[T any]() LinkedList[T] {
@@ -25,33 +25,33 @@ func (l *LinkedList[T]) insertFirst(value T) {
 	newNode := Node[T]{value, nil}
 	l.head = &newNode
 	l.tail = &newNode
-	l.length = 1
+	l.Length = 1
 }
 
 func (l *LinkedList[T]) Append(value T) {
-	if l.length == 0 {
+	if l.Length == 0 {
 		l.insertFirst(value)
 		return
 	}
 	newNode := Node[T]{value, nil}
 	l.tail.next = &newNode
 	l.tail = &newNode
-	l.length++
+	l.Length++
 }
 
 func (l *LinkedList[T]) Prepend(value T) {
-	if l.length == 0 {
+	if l.Length == 0 {
 		l.insertFirst(value)
 		return
 	}
 	newNode := Node[T]{value, nil}
 	newNode.next = l.head
 	l.head = &newNode
-	l.length++
+	l.Length++
 }
 
 func (l *LinkedList[T]) getNode(index int) (*Node[T], bool) {
-	if index < 0 || index >= l.length {
+	if index < 0 || index >= l.Length {
 		return nil, false
 	}
 	node := l.head
@@ -70,12 +70,12 @@ func (l *LinkedList[T]) Get(index int) (T, bool) {
 }
 
 func (l *LinkedList[T]) Insert(value T, index int) {
-	if l.length == 0 {
+	if l.Length == 0 {
 		l.insertFirst(value)
 		return
 	}
 
-	if index >= l.length {
+	if index >= l.Length {
 		l.Append(value)
 		return
 	}
@@ -88,11 +88,11 @@ func (l *LinkedList[T]) Insert(value T, index int) {
 	previous, _ := l.getNode(index - 1)
 	newNode.next = previous.next
 	previous.next = &newNode
-	l.length++
+	l.Length++
 }
 
 func (l *LinkedList[T]) Remove(index int) bool {
-	if index < 0 || index >= l.length {
+	if index < 0 || index >= l.Length {
 		return false
 	}
 	if index == 0 {
@@ -101,18 +101,18 @@ func (l *LinkedList[T]) Remove(index int) bool {
 		previous, _ := l.getNode(index - 1)
 		unwanted := previous.next
 		previous.next = unwanted.next
-		if index == l.length {
+		if index == l.Length {
 			l.tail = previous
 		}
 	}
-	l.length--
+	l.Length--
 	return true
 }
 
 func (l *LinkedList[T]) toArray() []T {
-	array := make([]T, l.length)
+	array := make([]T, l.Length)
 	current := l.head
-	for i := 0; i < l.length; i++ {
+	for i := 0; i < l.Length; i++ {
 		array[i] = current.value
 		current = current.next
 	}
@@ -120,7 +120,7 @@ func (l *LinkedList[T]) toArray() []T {
 }
 
 func (l *LinkedList[T]) String() string {
-	strArr := make([]string, l.length)
+	strArr := make([]string, l.Length)
 	for i, val := range l.toArray() {
 		strArr[i] = fmt.Sprintf("%v", val)
 	}

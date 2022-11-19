@@ -6,8 +6,8 @@ import (
 )
 
 func checkLength(t *testing.T, l *LinkedList[string], expected int) {
-	if length := l.length; length != expected {
-		t.Fatalf("LinkedList.length = %v, want %v", length, expected)
+	if length := l.Length; length != expected {
+		t.Fatalf("LinkedList.Length = %v, want %v", length, expected)
 	}
 }
 
