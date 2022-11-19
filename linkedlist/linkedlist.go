@@ -1,6 +1,7 @@
 package linkedlist
 
 import (
+	"datastructures/utils"
 	"fmt"
 	"strings"
 )
@@ -61,10 +62,9 @@ func (l *LinkedList[T]) getNode(index int) (*Node[T], bool) {
 }
 
 func (l *LinkedList[T]) Get(index int) (T, bool) {
-	var undefined T
 	node, found := l.getNode(index)
 	if !found {
-		return undefined, false
+		return utils.Zero[T](), false
 	}
 	return node.value, found
 }
