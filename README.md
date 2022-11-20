@@ -35,6 +35,7 @@
 * LinkedList
 * Stack
 * Queue
+* BinarySearchTree
 * More coming soon...
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
